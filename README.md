@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ant Design Pro
 
 This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
@@ -55,3 +56,7 @@ npm test
 ## More
 
 You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+=======
+# my-label-tool
+自定义标注组件的原码，参考自开源项目slava/label-tool
+>>>>>>> 901f175a7fad4022737ceadbb187fd81607542ee
