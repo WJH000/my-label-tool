@@ -1,7 +1,13 @@
-<<<<<<< HEAD
-# Ant Design Pro
+# my-label-tool
 
 This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+
+自定义标注组件的原码，参考自开源项目https://github.com/Slava/label-tool
+
+PS：
+1.基于react框架; 
+2.删减了部分功能，只保留了矩形选框和多边形（自由勾画）的标注功能; 
+3.支持项目内图片和在线图片访问，图片类型支持jpg、png，不支持dicom。
 
 ## Environment Prepare
 
@@ -55,8 +61,7 @@ npm test
 
 ## More
 
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+You can view full document on my  [code opening website](https://github.com/WJH000/my-label-tool.git). And ant-design-pro website [ant-design-pro](https://github.com/ant-design/ant-design-pro).
 =======
-# my-label-tool
-自定义标注组件的原码，参考自开源项目slava/label-tool
->>>>>>> 901f175a7fad4022737ceadbb187fd81607542ee
+# 
+
