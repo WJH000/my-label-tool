@@ -7,7 +7,7 @@ This project is initialized with [Ant Design Pro](https://pro.ant.design). Follo
 PS：
 1.基于react框架; 
 2.删减了部分功能，只保留了矩形选框和多边形（自由勾画）的标注功能; 
-3.支持项目内图片和在线图片访问，图片类型支持jpg、png，不支持dicom。
+3.支持项目内图片和在线图片访问，图片类型支持jpg、png，不支持dicom;
 
 ## Environment Prepare
 
