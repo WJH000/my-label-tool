@@ -15,7 +15,8 @@ export default class LabelingLoader extends Component {
       image: null,
       isLoaded: false,
       error: null,
-      labelData: {}
+      labelData: {},
+      commandType: 'bbox'   // bbox-矩形  polygon-多边形
     };
     this.labelingAppRef = React.createRef();
   }
@@ -33,20 +34,27 @@ export default class LabelingLoader extends Component {
   }
 
   componentDidMount() {
-    // this.refetch();
+    this.getLabelingInfo();
+    // console.log('--componentDidMount--')
+  }
+
+  /*componentDidUpdate(prevProps) {
+    // console.log('--componentDidUpdate--', prevProps)
+    const {labelingInfo} = this.props
+    if (prevProps.labelingInfo.image.id !== labelingInfo.image.id) {
+      this.getLabelingInfo();
+    }
+  }*/
+
+  componentWillReceiveProps(nextProps, nextContext) {
     this.getLabelingInfo();
   }
 
-  componentDidUpdate(prevProps) {
-    /*if (prevProps.match.params.imageId !== this.props.match.params.imageId) {
-      // this.refetch();
-      this.getLabelingInfo();
-    }*/
-  }
 
-  renderCommand = (type) => {
+  renderCommand = (commandType) => {
     if (this.labelingAppRef && this.labelingAppRef.current) {
-      this.labelingAppRef.current.compRef.current.compRef.current.compRef.current.handleSelected(type)
+      this.labelingAppRef.current.compRef.current.compRef.current.compRef.current.handleSelected(commandType)
+      this.setState({commandType})
     }
   }
 
@@ -101,71 +109,23 @@ export default class LabelingLoader extends Component {
   getLabelingInfo() {
     const {labelingInfo} = this.props;
     const response = labelingInfo
-    this.setState({
-      isLoaded: false,
-      error: null,
-      project: null,
-      image: null,
-    });
-    // const { match, history } = this.props;
-    // let { projectId, imageId } = match.params;
     const {project, image} = response;
-
+    const {labelData} = image
     this.setState({
       isLoaded: true,
       project,
       image,
+      ...labelData && {labelData}
     });
-  }
-
-
-  async refetch() {
-    this.setState({
-      isLoaded: false,
-      error: null,
-      project: null,
-      image: null,
-    });
-
-    const {match, history} = this.props;
-    let {projectId, imageId} = match.params;
-
-    try {
-      const a = document.createElement('a');
-      a.setAttribute('href', '/api/getLabelingInfo');
-      const url = new URL(a.href);
-
-      url.searchParams.append('projectId', projectId);
-      if (imageId) {
-        url.searchParams.append('imageId', imageId);
-      }
-
-      const {project, image} = await (await this.fetch(url)).json();
-
-      if (!project) {
-        history.replace(`/label/${projectId}/over`);
-        return;
-      }
-
-      history.replace(`/label/${project.id}/${image.id}`);
-
-      this.setState({
-        isLoaded: true,
-        project,
-        image,
-      });
-    } catch (error) {
-      this.setState({
-        isLoaded: true,
-        error,
-      });
-    }
   }
 
   async pushUpdate(labelData) {
-    // 修改坐标点之后的操作:暂存坐标信息
+    // 修改坐标点之后的操作:暂存当前坐标信息，并且保持该状态
     console.log('--修改坐标点之后的操作--', labelData);
     this.setState({labelData});
+   /* // 连续绘图时调用，暂不支持
+    const {commandType} = this.state
+    this.renderCommand(commandType)*/
   }
 
   async markComplete() {

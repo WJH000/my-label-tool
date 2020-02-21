@@ -2,9 +2,12 @@ import {PageHeaderWrapper} from '@ant-design/pro-layout';
 import React, {useState, useEffect, Component} from 'react';
 import {Spin, Button, Row, Col} from 'antd';
 import styles from './index.less';
+// 待调试标注组件引入
 // import LabelingLoader from '@/components/LabelTool/label/LabelingLoader'
+// 正式标注组件引入
 import {LabelingLoader} from "isa-label-tool";
 import testPic from '@/assets/603010000155.jpg'
+import {connect} from 'dva';
 
 const response = {
   "project": {
@@ -55,7 +58,7 @@ const response = {
   }
 }
 
-export default class Index extends Component {
+class Index extends Component {
   constructor() {
     super();
     this.state = {
@@ -75,7 +78,7 @@ export default class Index extends Component {
   handleSaveROI = () => {
     if (this.labelingLoaderRef && this.labelingLoaderRef.current) {
       this.labelingLoaderRef.current.calcLatLngToLayerPoint(({pBoxList, pPolygonList, pixelOrigin}) => {
-        console.log('--handleSaveROI --', pBoxList, pPolygonList, pixelOrigin)
+        // console.log('--handleSaveROI --', pBoxList, pPolygonList, pixelOrigin)
         this.setState({pBoxList, pPolygonList, pixelOrigin})
       })
     }
@@ -83,7 +86,7 @@ export default class Index extends Component {
 
   render() {
     const {pBoxList, pPolygonList, pixelOrigin} = this.state
-    console.log('pixelOrigin', pixelOrigin)
+    // console.log('pixelOrigin', pixelOrigin)
     return (
       <div>
         <Row>
@@ -93,7 +96,7 @@ export default class Index extends Component {
           <Col md={6}>
             <Button onClick={this.handleRenderLabel.bind(this, 'bbox')}>绘制矩形</Button>
             <Button onClick={this.handleRenderLabel.bind(this, 'polygon')}>绘制多边形</Button>
-            <Button type="primary" onClick={this.handleSaveROI}>提交</Button>
+            <Button type="primary" onClick={this.handleSaveROI}>提交绘制</Button>
             <div>
               {pBoxList.length > 0 && <div>
                 <p>ROI框坐标点</p>
@@ -128,5 +131,9 @@ export default class Index extends Component {
     )
   }
 }
+
+export default connect(({global}) => ({
+  global
+}))(Index);
 
 
